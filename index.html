@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>El Tridente Del Conocimiento</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <style>
+
+/* ===== CSS ELEGANTE Y MODERNO ===== */
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap');
+
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  -webkit-touch-callout: none; /* desactiva selección de texto en móvil */
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+button, .mode-btn {
+  -webkit-tap-highlight-color: transparent; /* quita destello feo en Android */
+}
+
+
+body {
+  font-family: 'Rubik', sans-serif;
+  background: radial-gradient(circle at top left, #1e1e2f, #0d1117 70%);
+  margin: 0;
+  padding: 0;
+  color: #e5e7eb;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ===== HEADER ===== */
+h1 {
+  text-align: center;
+  padding: 25px 15px;
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #6366f1, #22d3ee);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 4px 25px rgba(99,102,241,0.5);
+  letter-spacing: 1px;
+}
+
+/* ===== SECCIONES ===== */
+section {
+  padding: 25px;
+  margin: 30px auto;
+  border-radius: 24px;
+  max-width: 900px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+  animation: fadeIn 0.8s ease both;
+}
+
+/* Encabezado de secciones */
+h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #f9fafb;
+  text-shadow: 0 3px 14px rgba(0,0,0,0.5);
+  border-bottom: 2px solid rgba(255,255,255,0.1);
+  padding-bottom: 10px;
+}
+
+/* ===== PREGUNTAS (Tarjetas) ===== */
+.pregunta {
+  background: rgba(255,255,255,0.07);
+  padding: 20px;
+  margin-bottom: 22px;
+  transition: all 0.35s ease;
+  box-shadow: 0 4px 25px rgba(0,0,0,0.3);
+}
+
+.pregunta:hover {
+  transform: translateY(-6px);
+  background: rgba(255,255,255,0.12);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.45);
+}
+
+.pregunta p {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  font-weight: 500;
+  color: #f3f4f6;
+}
+
+/* Imágenes */
+.pregunta img {
+  display: block;
+  max-width: 280px;
+  margin: 15px auto;
+  border-radius: 16px;
+  border: 2px solid rgba(255,255,255,0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+  /* ===== OPCIONES ===== */
+.pregunta ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pregunta li {
+  background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+  padding: 14px;
+  margin: 10px 0;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #e2e8f0;
+  transition: all 0.25s ease;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.pregunta li:hover {
+  background: linear-gradient(135deg, #6366f1, #22d3ee);
+  color: #fff;
+  transform: translateX(6px) scale(1.02);
+  box-shadow: 0 4px 16px rgba(99,102,241,0.45);
+}
+
+/* Correcta */
+.pregunta li.correct {
+  background: linear-gradient(135deg, #22c55e, #15803d) !important;
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 0 20px rgba(34,197,94,0.6);
+  animation: glowGreen 0.6s ease;
+}
+
+/* Incorrecta */
+.pregunta li.incorrect {
+  background: linear-gradient(135deg, #ef4444, #7f1d1d) !important;
+  color: #fff;
+  font-weight: 600;
+  animation: shake 0.4s ease;
+}
+
+/* ===== AUDIO ===== */
+audio {
+  margin: 12px 0;
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.05);
+}
+
+/* ===== MENSAJE Y BOTÓN ===== */
+.resultado {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 1.05rem;
+  color: #f3f4f6;
+}
+
+.reintentar {
+  margin-top: 12px;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 30px;
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+}
+
+.reintentar:hover {
+  background: linear-gradient(135deg, #2563eb, #0891b2);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* ===== ANIMACIONES ===== */
+@keyframes fadeIn {
+  from {opacity:0; transform: translateY(20px);}
+  to {opacity:1; transform: translateY(0);}
+}
+
+@keyframes glowGreen {
+  from {box-shadow: 0 0 0px rgba(34,197,94,0);}
+  to {box-shadow: 0 0 25px rgba(34,197,94,0.7);}
+}
+
+@keyframes shake {
+  10%, 90% { transform: translateX(-3px); }
+  20%, 80% { transform: translateX(6px); }
+  30%, 50%, 70% { transform: translateX(-6px); }
+  40%, 60% { transform: translateX(6px); }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  section {
+    margin: 15px;
+    padding: 18px;
+  }
+  h1 {
+    font-size: 2.1rem;
+  }
+  h2 {
+    font-size: 1.4rem;
+  }
+}
+
+/* ===== PANTALLA DE INICIO ===== */
+.home-screen {
+  text-align: center;
+  padding: 40px 20px;
+  animation: fadeIn 1s ease both;
+}
+
+.home-screen h1 {
+  font-size: 2.8rem;
+  background: linear-gradient(135deg, #6366f1, #22d3ee);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+}
+
+.home-screen .subtitle {
+  color: #9ca3af;
+  font-size: 1.2rem;
+  margin-bottom: 35px;
+}
+
+.modes {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.mode-btn {
+  padding: 16px 22px;
+  border: none;
+  border-radius: 16px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+}
+
+.mode-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+}
+
+/* Colores por categoría mejorados */
+.mode-btn.futbol {
+  background: linear-gradient(135deg, #1db954, #0f3d2e); /* Verde vibrante + profundidad */
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(29, 185, 84, 0.4);
+}
+
+.mode-btn.basket {
+  background: linear-gradient(135deg, #ff6f00, #3e2723); /* Naranja fuego + asfalto oscuro */
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(255, 111, 0, 0.4);
+}
+
+.mode-btn.videojuegos {
+  background: linear-gradient(135deg, #00e5ff, #6200ea); /* Neón azul + morado cósmico */
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 229, 255, 0.4);
+}
+
+/* ===== BOTÓN DE VOLVER ===== */
+.back-btn {
+  margin-bottom: 20px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #6b7280, #374151);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.back-btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #9ca3af, #4b5563);
+}
+
+/* Barra de estado */
+.status-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255,255,255,0.08);
+  padding: 10px 15px;
+  border-radius: 12px;
+  margin-bottom: 18px;
+  font-weight: 600;
+  color: #f3f4f6;
+  font-size: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+.status-bar .score {
+  color: #22c55e; /* verde */
+}
+
+.status-bar .timer {
+  color: #f87171; /* rojo */
+}
+
+  </style>
+
+  
+</head>
+<body>
+
+<div id="home" class="home-screen">
+  <h1>El Tridente Del Conocimiento</h1>
+  <p class="subtitle">Elige tu modo de juego</p>
+  <div class="modes">
+    <button class="mode-btn futbol">⚽ Fútbol</button>
+    <button class="mode-btn basket">🏀 Basket</button>
+    <button class="mode-btn videojuegos">🎮 Videojuegos</button>
+  </div>
+</div>
+
+  <!-- =======================
+       SECCIÓN: FÚTBOL
+       ======================= -->
+  <section id="futbol">
+    <h2>⚽ Fútbol</h2>
+
+    <!-- SILUETAS -->
+    <div class="pregunta tipo-silueta" data-correct="3">
+      <p>¿Quién es este jugador? </p>
+      <img src="kaka.jpg" alt="Silueta jugador 1">
+      <ul>
+        <li>Rudi Voller</li>
+        <li>Cristiano Ronaldo</li>
+        <li>Ricardo Kaká</li>
+        <li>Marco van Basten</li>
+      </ul>
+    </div>
+
+    <div class="pregunta tipo-silueta" data-correct="4">
+      <p>¿Quién es este jugador? </p>
+      <img src="lampard.jpg" alt="Silueta jugador 2">
+      <ul>
+        <li>Augustine Okocha</li>
+        <li>Carlos Alberto Torres</li>
+        <li>Ruud van Nistelrroy</li>
+        <li>Frank Lampard</li>
+      </ul>
+    </div>
+
+    <!-- AUDIO -->
+    <div class="pregunta tipo-audio" data-correct="1">
+      <p>Escucha el audio y responde, ¿Contra que equipo fue este gol? </p>
+      <audio controls>
+        <source src="benzemaaaaa.mp3" type="audio/mpeg">
+      </audio>
+      <ul>
+        <li>PSG</li>
+        <li>Liverpool</li>
+        <li>Chelsea</li>
+        <li>Barcelona</li>
+      </ul>
+    </div>
+
+        <div class="pregunta tipo-audio" data-correct="1">
+      <p>Escucha el audio y responde, ¿En que competencia se narro este penal decisivo? </p>
+      <audio controls>
+        <source src="./SOMOS TODOS MONTIEL.mp3" type="audio/mpeg">
+      </audio>
+      <ul>
+        <li>Final de la copa del mundo de 2022</li>
+        <li>Final de la copa del mundo de 1986</li>
+        <li>Final de la copa del mundo de 2006</li>
+        <li>Final de la copa del mundo de 1978</li>
+      </ul>
+    </div>
+
+    <div class="pregunta tipo-audio" data-correct="2">
+      <p>Escucha el audio y responde ¿Contra que equipo fue este gol?</p>
+      <audio controls>
+        <source src="ronaldooooo.mp3" type="audio/mpeg">
+      </audio>
+      <ul>
+        <li>Croacia</li>
+        <li>España</li>
+        <li>Francia</li>
+        <li>Alemania</li>
+      </ul>
+    </div>
+
+    <!-- PREGUNTAS DE TEXTO -->
+    <div class="pregunta tipo-texto" data-correct="3">
+      <p>Exjuagdor Frances, ganador del balón de oro en 1991, jugó en el Bayern Munich, ¿Quién es?</p>
+      <ul>
+        <li>Lothar Matthäus</li>
+        <li>Maldini</li>
+        <li>Jean-Pierre Papin</li>
+        <li>Gullit</li>
+      </ul>
+    </div>
+
+    <div class="pregunta tipo-texto" data-correct="4">
+      <p>¿Cuales de estos equipos tienen un triplete? </p>
+      <ul>
+        <li>Real Madrid - Manchester United - PSG - Borussia Dortmund</li>
+        <li>Bayern de Múnich - Manchester City - FC Barcelona - Real Madrid</li>
+        <li> FC Internazionale - Atletico De Madrid - Arsenal - Crystal Palace</li>
+        <li>FC Barcelona - Manchester City - FC Ajax - PSV</li>
+      </ul>
+    </div>
+
+        <div class="pregunta tipo-texto" data-correct="3">
+      <p>¿Quien es el mejor jugador de la historia?</p>
+      <ul>
+        <li>Anthony Matheus dos Santos</li>
+        <li>Diego Armando Maradona</li>
+        <li>Lionel Andres Messi Cuccittini</li>
+        <li>Harry Maguire</li>
+      </ul>
+    </div>
+
+    
+
+    <button class="back-btn">← Volver al menú</button>
+    
+    <div class="status-bar">
+  <span class="score">Puntos: 0</span>
+  <span class="timer">Tiempo: 60s</span>
+</div>
+
+  </section>
+
+  <!-- =======================
+       SECCIÓN: BASKET
+       ======================= -->
+  <section id="basket">
+    <h2>🏀 Basket</h2>
+
+    <!-- SILUETAS -->
+    <div class="pregunta tipo-silueta" data-correct="1">
+      <p>¿Quién es este jugador? </p>
+      <img src="O8ULFJ.jpg"   alt="Silueta jugador 1">
+      <ul>
+        <li>Stephen Curry</li>
+        <li>Lebron James</li>
+        <li>Dikembe Mutombo</li>
+        <li>Antony Davis</li>
+      </ul>
+    </div>
+
+    <div class="pregunta tipo-silueta" data-correct="3">
+      <p>¿Quién es este jugador? </p>
+      <img src="km.jpg" alt="Silueta jugador 2">
+      <ul>
+        <li>Jared McCain</li>
+        <li>Karl-Antony Towns</li>
+        <li>Karl Malone</li>
+        <li>Karem Abdul-Jabbar</li>
+      </ul>
+    </div>
+
+    <!-- AUDIO -->
+    <div class="pregunta tipo-audio" data-correct="4">
+      <p>Escucha el audio y responde, ¿Contra que equipo fue este tiro?</p>
+      <audio controls>
+        <source src="shot by curry.mp3" type="audio/mpeg">
+      </audio>
+      <ul>
+        <li>Nets</li>
+        <li>Lakers</li>
+        <li>Miami Heat</li>
+        <li>OKC</li>
+      </ul>
+    </div>
+
+    <div class="pregunta tipo-audio" data-correct="2">
+      <p>Escucha el audio y responde, ¿Contra que equipo fue este tiro?</p>
+      <audio controls>
+        <source src="lennard game winner.mp3" type="audio/mpeg">
+      </audio>
+      <ul>
+        <li>Warriors</li>
+        <li>Sixers</li>
+        <li>Orlando Magic</li>
+        <li>Hawks</li>
+      </ul>
+    </div>
+
+    <!-- PREGUNTAS DE TEXTO -->
+    <div class="pregunta tipo-texto" data-correct="2">
+      <p>Exjuagdor iconico de los sixers, ganador del mpv y 16 veces nominado al all star, mejor conocido como Dr. J, ¿Quién es?</p>
+      <ul>
+        <li>Magic Jhonson</li>
+        <li>Julius Erving</li>
+        <li>Larry Bird</li>
+        <li>Bill Walton</li>
+      </ul>
+    </div>
+
+    <div class="pregunta tipo-texto" data-correct="3">
+      <p>Exjugaor icónico de los Sixers y Suns, ganador del mpv en 1993 y 11 veces nominado al all star, ¿Quién es?</p>
+      <ul>
+        <li>John Stockton </li>
+        <li>Michael Jordan</li>
+        <li>Charles Barkley </li>
+        <li>Isiah Thomas</li>
+      </ul>
+    </div>
+
+  <button class="back-btn">← Volver al menú</button>
+
+  <div class="status-bar">
+  <span class="score">Puntos: 0</span>
+  <span class="timer">Tiempo: 60s</span>
+</div>
+
+  </section>
+
+  <!-- =======================
+       SECCIÓN: VIDEOJUEGOS
+       ======================= -->
+  <section id="videojuegos">
+    <h2>🎮 Videojuegos</h2>
+
+    <!-- SILUETAS -->
+    <div class="pregunta tipo-silueta" data-correct="4">
+      <p>¿Qué personaje es este? </p>
+      <img src="kratos.png" alt="Silueta personaje 1">
+      <ul>
+        <li>Johnny Cage</li>
+        <li>Crash Bandicoot</li>
+        <li>Sub-Zero</li>
+        <li>Kratos</li>
+      </ul>
+    </div>
+
+    <div class="pregunta tipo-silueta" data-correct="1">
+      <p>¿Qué personaje es este?</p>
+      <img src="halo-3-master-chief.png" alt="Silueta personaje 2">
+      <ul>
+        <li>Master Chief</li>
+        <li>Joseph Seed</li>
+        <li>Super Mario</li>
+        <li>Lara Croft</li>
+      </ul>
+    </div>
+
+    <!-- AUDIO -->
+    <div class="pregunta tipo-audio" data-correct="3">
+      <p>Escucha el audio y responde, ¿Que personaje de los videojuegos dice esto?</p>
+      <audio controls>
+        <source src="get over here.mp3" type="audio/mpeg">
+      </audio>
+      <ul>
+        <li>Solid Snake</li>
+        <li>Kirby</li>
+        <li>Scorpion</li>
+        <li>Luigi</li>
+      </ul>
+    </div>
+
+    <div class="pregunta tipo-audio" data-correct="3">
+      <p>Escucha el audio y responde, ¿Que personaje de los videojuegos dice esto?</p>
+      <audio controls>
+        <source src="i guess im afraid.mp3" type="audio/mpeg">
+      </audio>
+      <ul>
+        <li>Geralt de Rivia</li>
+        <li>Link</li>
+        <li>Arthur Morgan</li>
+        <li>Nathan Drake</li>
+      </ul>
+    </div>
+
+    <!-- PREGUNTAS DE TEXTO -->
+    <div class="pregunta tipo-texto" data-correct="2">
+      <p>¿Quién es el personaje de videojuegos más famoso de todos los tiempos?</p>
+      <ul>
+        <li>Pikachu</li>
+        <li>Mario</li>
+        <li>Superman</li>
+        <li>Sonic</li>
+      </ul>
+    </div>
+
+    <div class="pregunta tipo-texto" data-correct="1">
+      <p>¿Cuál es el videojuego más caro de todos los tiempos?</p>
+      <ul>
+        <li>Grand Theft Auto V</li>
+        <li>Super Mario</li>
+        <li>Minecraft</li>
+        <li>Pokemon</li>
+      </ul>
+    </div>
+
+    <button class="back-btn">← Volver al menú</button>
+
+    <div class="status-bar">
+  <span class="score">Puntos: 0</span>
+  <span class="timer">Tiempo: 60s</span>
+</div>
+
+  </section>
+
+  <script>
+document.addEventListener('DOMContentLoaded', ()=>{
+
+  let score = 0;
+  let timeLeft = 60;
+  let timerInterval;
+  let currentSection = null;
+
+  // ===============================
+  // INICIALIZAR QUIZ
+  // ===============================
+  const questions = document.querySelectorAll('.pregunta');
+  questions.forEach(setupQuestion);
+
+  function setupQuestion(container){
+    const list = container.querySelector('ul');
+    if(!list) return;
+    const items = Array.from(list.querySelectorAll('li'));
+    if(items.length===0) return;
+
+    const total = items.length;
+    let correctIndex = 0;
+    const attr = container.getAttribute('data-correct');
+    if(attr){
+      const n = parseInt(attr, 10);
+      if(!isNaN(n) && n>=1 && n<=total){
+        correctIndex = n - 1;
+      } else {
+        const wanted = attr.trim().toLowerCase();
+        const byText = items.findIndex(li => li.textContent.trim().toLowerCase() === wanted);
+        if(byText !== -1) correctIndex = byText;
+      }
+    }
+    container.dataset._correctIndex = String(correctIndex);
+
+    items.forEach((li, idx)=>{
+      li.addEventListener('click', ()=> select(container, idx));
+    });
+
+    let result = container.querySelector('.resultado');
+    if(!result){
+      result = document.createElement('div');
+      result.className = 'resultado';
+      container.appendChild(result);
+    }
+  }
+
+  // ===============================
+  // FUNCIÓN SELECT (RESPUESTAS)
+  // ===============================
+  function select(container, idx){
+  if(container.classList.contains('answered')) return;
+  const items = Array.from(container.querySelectorAll('ul > li'));
+  const correct = parseInt(container.dataset._correctIndex || '0', 10);
+
+  items.forEach(li=>li.classList.remove('correct','incorrect'));
+
+  if(idx === correct){
+    items[idx].classList.add('correct');
+    show(container, '✅ ¡Correcto!');
+    score += 10;
+  } else {
+    items[idx].classList.add('incorrect');
+    if(items[correct]) items[correct].classList.add('correct');
+    const correctText = items[correct]?.textContent?.trim() || '';
+    show(container, `❌ Incorrecto. Respuesta: ${correctText}`);
+  }
+
+  container.classList.add('answered');
+  updateScore();
+
+    // ✅ Verificar si todas las preguntas de la sección ya fueron contestadas
+  const allAnswered = Array.from(currentSection.querySelectorAll('.pregunta'))
+    .every(p => p.classList.contains('answered'));
+
+  if(allAnswered){
+    clearInterval(timerInterval); // detener tiempo
+    endGame(); // terminar juego antes de que se acabe el tiempo
+  }
+}
+
+  function show(container, msg){
+    const r = container.querySelector('.resultado');
+    if(r) r.textContent = msg;
+  }
+
+  // ===============================
+  // SCORE Y TIMER
+  // ===============================
+  function updateScore(){
+    if(currentSection){
+      const scoreEl = currentSection.querySelector('.score');
+      if(scoreEl) scoreEl.textContent = "Puntos: " + score;
+    }
+  }
+
+  function updateTimer(){
+    if(currentSection){
+      const timerEl = currentSection.querySelector('.timer');
+      if(timerEl) timerEl.textContent = "Tiempo: " + timeLeft + "s";
+    }
+  }
+
+  function startGame(section){
+    score = 0;
+    timeLeft = 60;
+    currentSection = section;
+    updateScore();
+    updateTimer();
+
+    clearInterval(timerInterval);
+    timerInterval = setInterval(()=>{
+      timeLeft--;
+      updateTimer();
+      if(timeLeft <= 0){
+        clearInterval(timerInterval);
+        endGame();
+      }
+    },1000);
+  }
+
+
+function endGame(){
+  // Ocultar sección y mostrar pantalla final
+  if(currentSection){
+    currentSection.style.display = "none";
+  }
+  const home = document.getElementById('home');
+  home.style.display = "block";
+  home.innerHTML = `
+    <h1>Juego terminado</h1>
+    <p class="subtitle">Tu puntaje final fue: <strong>${score}</strong></p>
+    <button id="playAgain" class="mode-btn futbol">↩️ Volver al menú</button>
+  `;
+
+  // ✅ Evento del botón volver al menú
+  document.getElementById('playAgain').addEventListener('click', ()=>{
+    location.reload(); // recarga la app desde cero
+  });
+}
+
+  // ===============================
+  // NAVEGACIÓN
+  // ===============================
+  const home = document.getElementById('home');
+  const sections = document.querySelectorAll('section');
+  const modeBtns = document.querySelectorAll('.mode-btn');
+  const backBtns = document.querySelectorAll('.back-btn');
+
+  sections.forEach(s => s.style.display = "none");
+
+  modeBtns.forEach(btn => {
+    btn.addEventListener('click', ()=>{
+      home.style.display = "none";
+      sections.forEach(s => s.style.display = "none");
+      if(btn.classList.contains('futbol')) {
+        document.getElementById('futbol').style.display = "block";
+        startGame(document.getElementById('futbol'));
+      } else if(btn.classList.contains('basket')) {
+        document.getElementById('basket').style.display = "block";
+        startGame(document.getElementById('basket'));
+      } else {
+        document.getElementById('videojuegos').style.display = "block";
+        startGame(document.getElementById('videojuegos'));
+      }
+    });
+  });
+
+  backBtns.forEach(back => {
+    back.addEventListener('click', ()=>{
+      sections.forEach(s => s.style.display = "none");
+      home.style.display = "block";
+      clearInterval(timerInterval);
+    });
+  });
+
+});
+</script>
+
+</body>
+</html>
